@@ -16,6 +16,12 @@ content-type: application/json
   "password": "fuckers"
 }
 
+### Get Me
+GET http://localhost:3000/auth/whoami
+
+### LogOut
+POST http://localhost:3000/auth/signout
+
 ### Find user by ID
 GET http://localhost:3000/auth/2
 
