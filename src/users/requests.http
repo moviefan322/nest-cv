@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-  "email": "balls@freddy.com",
+  "email": "poop2@freddy.com",
   "password": "fuckers"
 }
 
@@ -12,8 +12,8 @@ POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-  "email": "balls@freddy.com",
-  "password": "fucker"
+  "email": "poop2@freddy.com",
+  "password": "fuckers"
 }
 
 ### Find user by ID
@@ -32,3 +32,5 @@ content-type: application/json
 {
   "email": "fred@balls.com"
   }
+
+
