@@ -31,6 +31,7 @@ export class UsersService {
     }
 
     Object.assign(user, attrs);
+    console.log(attrs);
     return this.repo.save(user);
   }
 

@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-  "email": "poop2@freddy.com",
+  "email": "poop22@freddy.com",
   "password": "fuckers"
 }
 
@@ -23,20 +23,20 @@ GET http://localhost:3000/auth/whoami
 POST http://localhost:3000/auth/signout
 
 ### Find user by ID
-GET http://localhost:3000/auth/2
+GET http://localhost:3000/auth/5
 
 ### Find all users by email
 GET http://localhost:3000/auth?email=balls@fred.com
 
 ### Delete a user
-DELETE http://localhost:3000/auth/12
+DELETE http://localhost:3000/auth/5
 
 ### Update a user
-PATCH http://localhost:3000/auth/23
+PATCH http://localhost:3000/auth/6
 content-type: application/json
 
 {
-  "email": "fred@balls.com"
+  "email": "freddickstone@balls.com"
   }
 
 
