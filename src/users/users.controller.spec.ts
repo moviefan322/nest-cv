@@ -50,7 +50,7 @@ describe('UsersController', () => {
         return Promise.resolve(user);
       },
       signin: (email: string, password: string) => {
-        const user = users.find((user) => {
+        const user: User = users.find((user) => {
           return user.email === email;
         });
         if (user && user.password === password) {
@@ -84,8 +84,24 @@ describe('UsersController', () => {
     expect(users[0].email).toEqual('asdf');
   });
 
+  it('findUser returns a single user with the given id', async () => {
+    const user = await controller.findUser('1');
+    expect(user).toBeDefined();
+  });
+
   it('findUser throws an error if user with given id is not found', async () => {
     fakeUsersService.findOne = () => null;
     await expect(controller.findUser('1')).rejects.toThrow(NotFoundException);
+  });
+
+  it('signin updates session object and returns user', async () => {
+    const session = { userId: -10 };
+    const email = 'asdf@asdf.com';
+    const password = 'asdf';
+    await fakeAuthService.signup(email, password);
+    const user = await controller.signIn({ email, password }, session);
+
+    expect(user.email).toEqual(email);
+    expect(session.userId).toEqual(user.id);
   });
 });
