@@ -3,7 +3,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { AuthService } from './auth.service';
-import { find } from 'rxjs';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -11,7 +11,7 @@ describe('UsersController', () => {
   let fakeAuthService: Partial<AuthService>;
 
   beforeEach(async () => {
-    let users: User[] = [];
+    const users: User[] = [];
 
     fakeUsersService = {
       findOne: (id: number) => {
@@ -65,6 +65,10 @@ describe('UsersController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
+      providers: [
+        { provide: UsersService, useValue: fakeUsersService },
+        { provide: AuthService, useValue: fakeAuthService },
+      ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
@@ -72,5 +76,10 @@ describe('UsersController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('findUser throws an error if user with given id is not found', async () => {
+    fakeUsersService.findOne = () => null;
+    await expect(controller.findUser('1')).rejects.toThrow(NotFoundException);
   });
 });
