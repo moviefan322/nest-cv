@@ -78,6 +78,12 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
+  it('findAllUsers returns a list of users with the given email', async () => {
+    const users = await controller.findAllUsers('asdf');
+    expect(users.length).toEqual(1);
+    expect(users[0].email).toEqual('asdf');
+  });
+
   it('findUser throws an error if user with given id is not found', async () => {
     fakeUsersService.findOne = () => null;
     await expect(controller.findUser('1')).rejects.toThrow(NotFoundException);
