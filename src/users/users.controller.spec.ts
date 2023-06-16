@@ -11,15 +11,56 @@ describe('UsersController', () => {
   let fakeAuthService: Partial<AuthService>;
 
   beforeEach(async () => {
+    let users: User[] = [];
+
     fakeUsersService = {
-      findOne: (id: number) => {},
-      find: (email: string) => {},
-      remove: (id: number) => {},
-      update: (id: number, attrs: Partial<User>) => {},
+      findOne: (id: number) => {
+        return Promise.resolve({ id, email: 'asdf', password: 'asdf' } as User);
+      },
+      find: (email: string) => {
+        return Promise.resolve([{ id: 1, email, password: 'asdf' } as User]);
+      },
+      remove: (id: number) => {
+        return Promise.resolve({ id, email: 'asdf', password: 'asdf' } as User);
+      },
+      update: (id: number, attrs: Partial<User>) => {
+        let email;
+        let password;
+        if (attrs.email) {
+          email = attrs.email;
+        } else {
+          email = 'asdf';
+        }
+        if (attrs.password) {
+          password = attrs.password;
+        } else {
+          password = 'asdf';
+        }
+        return Promise.resolve({ id, email, password } as User);
+      },
     };
     fakeAuthService = {
-      signup: () => Promise.resolve(),
-      signin: () => Promise.resolve(),
+      signup: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 999),
+          email,
+          password,
+        } as User;
+        users.push(user);
+        return Promise.resolve(user);
+      },
+      signin: (email: string, password: string) => {
+        const user = users.find((user) => {
+          return user.email === email;
+        });
+        if (user && user.password === password) {
+          return Promise.resolve(user);
+        }
+        if (user && user.password !== password) {
+          return Promise.reject('invalid credentials');
+        }
+        return Promise.reject('user not found');
+      },
     };
 
     const module: TestingModule = await Test.createTestingModule({
