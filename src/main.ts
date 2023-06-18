@@ -11,11 +11,7 @@ async function bootstrap() {
       keys: ['pooponmybutt'],
     }),
   );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
+  app.useGlobalPipes();
   await app.listen(3000);
 }
 bootstrap();
