@@ -12,3 +12,10 @@ content-type: application/json
   "price": 10000
 }
 
+### Approve a report
+PATCH http://localhost:3000/reports/7
+content-type: application/json
+
+{
+  "approved": false
+}
