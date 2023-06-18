@@ -13,9 +13,9 @@ content-type: application/json
 }
 
 ### Approve a report
-PATCH http://localhost:3000/reports/7
+PATCH http://localhost:3000/reports/8
 content-type: application/json
 
 {
-  "approved": false
+  "approved": true
 }
