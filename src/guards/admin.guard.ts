@@ -7,6 +7,6 @@ export class AdminGuard implements CanActivate {
       return false;
     }
 
-    return request.session.admin;
+    return request.currentUser.admin;
   }
 }
