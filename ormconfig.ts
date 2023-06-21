@@ -1,5 +1,9 @@
-var dbConfig = {
+const dbConfig = {
   synchronize: false,
+  migrations: ['migration/*.js'],
+  cli: {
+    migrationsDir: 'migration',
+  },
 };
 
 switch (process.env.NODE_ENV) {
