@@ -1,24 +1,24 @@
-const dbConfig = {
-  synchronize: false,
-  migrations: ['migration/*.js'],
-  cli: {
-    migrationsDir: 'migration',
-  },
-};
+import { DataSource } from 'typeorm';
+
+const dataSource = new DataSource({
+  type: 'sqlite',
+  database: 'db.sqlite',
+});
 
 switch (process.env.NODE_ENV) {
   case 'development':
-    Object.assign(dbConfig, {
+    Object.assign(dataSource, {
       type: 'sqlite',
       database: 'db.sqlite',
       entities: ['**/*.entity.js'],
     });
     break;
   case 'test':
-    Object.assign(dbConfig, {
+    Object.assign(dataSource, {
       type: 'sqlite',
       database: 'test.sqlite',
       entities: ['**/*.entity.ts'],
+      migrationsRun: true,
     });
     break;
   case 'production':
@@ -27,4 +27,13 @@ switch (process.env.NODE_ENV) {
     throw new Error('unknown environment');
 }
 
-module.exports = dbConfig;
+dataSource
+  .initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization', err);
+  });
+
+module.exports = dataSource;
